@@ -1,15 +1,33 @@
 class Ship {
-  constructor(length, hitLocation) {
+  constructor(length) {
     this.length = length;
-    this.hitLocation = hitLocation;
+    this.health = 3;
+    this.hitLocation = null;
+    this.spaces = {};
     this.sunk = false;
+    this.createSpaces(length);
   }
 
-  hit() {
-    // takes a number and then marks that position as ‘hit’
+  hit(n) {
+    // takes a number and then marks that space as ‘hit’
+    this.spaces[n] = true;
   }
 
   isSunk() {
-    // calculates based on ship's length and whether all of its positions are ‘hit’
+    if (this.health === 0) {
+      this.sunk = true;
+    }
+  }
+
+  createSpaces(length) {
+    for (let i = 0; i < length; i++) {
+      this.spaces[i] = false;
+    }
   }
 }
+
+// test ship
+const newShip = new Ship(3);
+
+exports.Ship = Ship;
+exports.newShip = newShip;
