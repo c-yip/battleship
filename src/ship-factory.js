@@ -32,7 +32,4 @@ class Ship {
 }
 
 // test ship
-const newShip = new Ship(3);
-
-exports.Ship = Ship;
-exports.newShip = newShip;
+export const newShip = new Ship(3);

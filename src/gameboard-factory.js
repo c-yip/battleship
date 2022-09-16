@@ -5,6 +5,7 @@
 // to the correct ship, or records the coordinates of the missed shot.
 // Gameboards should keep track of missed attacks so they can display them properly.
 // Gameboards should be able to report whether or not all of their ships have been sunk.
+import { Ship } from './ship-factory';
 
 class BoardPiece {
   constructor() {
