@@ -8,22 +8,13 @@
 import { Ship } from './ship-factory';
 
 class BoardPiece {
-  constructor() {
+  constructor(x, y) {
     this.hit = false;
     this.miss = false;
     this.occupied = false;
-    this.x = 0;
-    this.y = 0;
-    this.idCounter();
-  }
-
-  idCounter() {
-    this.x++;
-    this.y++;
-  }
-
-  addShip() {
-    // adds ship piece to board piece
+    this.x = x;
+    this.y = y;
+    this.shipId = null;
   }
 
   receiveAttack() {
@@ -35,7 +26,24 @@ class BoardPiece {
   }
 }
 
-function createGameboard() {
+function getBoardPiece(gameboard, index, x, y, newShip) {
+  const boardPiece = gameboard[index].find((obj) => obj.x === x && obj.y === y);
+  boardPiece.occupied = true;
+  boardPiece.shipId = newShip.id;
+  console.log('board piece', boardPiece);
+}
+
+export function placeShip(length, id, gameboard, index, x, y) {
+  // create ship
+  const newShip = new Ship(length, id);
+  console.log('new ship', newShip);
+  // place ship in boardgame objects, link boardgame objects to the new ship through shipId
+  for (let i = 0; i < length; i++) {
+    getBoardPiece(gameboard, index, x, y, newShip);
+  }
+}
+
+export function createGameboard() {
   const arr = [];
 
   // board size
@@ -52,7 +60,7 @@ function createGameboard() {
   // inserting elements to array
   for (let i = 0; i < a; i++) {
     for (let j = 0; j < b; j++) {
-      arr[i][j] = new BoardPiece();
+      arr[i][j] = new BoardPiece(i, j);
     }
   }
 
@@ -63,5 +71,3 @@ let hitCount;
 function checkIfAllShipsSunk() {
   // checks hit count and if hit count hits limit then game over
 }
-
-console.log(createGameboard());
