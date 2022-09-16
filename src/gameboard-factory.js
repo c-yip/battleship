@@ -5,6 +5,7 @@
 // to the correct ship, or records the coordinates of the missed shot.
 // Gameboards should keep track of missed attacks so they can display them properly.
 // Gameboards should be able to report whether or not all of their ships have been sunk.
+
 import { Ship } from './ship-factory';
 
 class BoardPiece {
@@ -32,14 +33,24 @@ function getBoardPiece(gameboard, index, x, y, newShip) {
   boardPiece.shipId = newShip.id;
   console.log('board piece', boardPiece);
 }
-
-export function placeShip(length, id, gameboard, index, x, y) {
+const isHorizontal = true;
+export function placeShip(length, id, gameboard, index, x, y, isHorizontal) {
   // create ship
   const newShip = new Ship(length, id);
   console.log('new ship', newShip);
   // place ship in boardgame objects, link boardgame objects to the new ship through shipId
-  for (let i = 0; i < length; i++) {
-    getBoardPiece(gameboard, index, x, y, newShip);
+  if (isHorizontal) {
+    for (let i = 0; i < length; i++) {
+      // y increases based on length, placement is right to left
+      getBoardPiece(gameboard, index, x, y, newShip);
+      y++;
+    }
+  } else {
+    for (let i = 0; i < length; i++) {
+      // x and index increase to go vertical
+      getBoardPiece(gameboard, index++, x, y, newShip);
+      x++;
+    }
   }
 }
 
