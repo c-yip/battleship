@@ -1,4 +1,5 @@
 import { Ship, hit } from './ship-factory';
+import Player from './player';
 
 export class BoardPiece {
   constructor(x, y) {
@@ -103,15 +104,6 @@ export function getOccupiedPieces(gameboard) {
   const merged = [].concat(...gameboard);
   const occupiedPieces = merged.filter((pieces) => pieces.occupied === true);
   return occupiedPieces;
-}
-
-export function startGame() {
-  // create player gameboard
-  const gameboard = createGameboard();
-  // function that lets player place ships
-  // Player.placePlayerShips();
-  // create computer gameboard
-  // function that has computer place ships randomly
 }
 
 // test board piece
