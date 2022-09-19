@@ -1,11 +1,3 @@
-// Gameboards should be able to place ships at specific coordinates
-// by calling the ship factory function.
-// Gameboards should have a receiveAttack function that takes a pair of coordinates,
-// determines whether or not the attack hit a ship and then sends the ‘hit’ function
-// to the correct ship, or records the coordinates of the missed shot.
-// Gameboards should keep track of missed attacks so they can display them properly.
-// Gameboards should be able to report whether or not all of their ships have been sunk.
-
 import { Ship, hit } from './ship-factory';
 
 export class BoardPiece {
@@ -71,6 +63,17 @@ export function createGameboard() {
     }
   }
 
+  // create 7x7 gameboard in DOM
+  const gameboard = document.querySelector('.gameboard');
+  for (let i = 0; i < a; i++) {
+    for (let j = 0; j < b; j++) {
+      const div = document.createElement('div');
+      div.classList.add('board-piece');
+      div.setAttribute('data-x', i);
+      div.setAttribute('data-y', j);
+      gameboard.appendChild(div);
+    }
+  }
   return arr;
 }
 
@@ -100,6 +103,15 @@ export function getOccupiedPieces(gameboard) {
   const merged = [].concat(...gameboard);
   const occupiedPieces = merged.filter((pieces) => pieces.occupied === true);
   return occupiedPieces;
+}
+
+export function startGame() {
+  // create player gameboard
+  const gameboard = createGameboard();
+  // function that lets player place ships
+  // Player.placePlayerShips();
+  // create computer gameboard
+  // function that has computer place ships randomly
 }
 
 // test board piece
