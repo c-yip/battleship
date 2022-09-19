@@ -30,10 +30,10 @@ test('ship sinks after three attacks', () => {
   const gameboard = createGameboard();
   placeShip(3, 0, gameboard, 0, 0, 1, true);
   const occupiedPieces = getOccupiedPieces(gameboard);
-  console.log('occupied pieces', occupiedPieces);
-  const boardPiece = gameboard[0][1];
-  const ship = shipArray[0];
-  attack(boardPiece, ship);
-  expect(boardPiece.hit).toBe(true);
-  expect(ship.health).toBe(2);
+  const ship = shipArray[1];
+  occupiedPieces.forEach((piece) => {
+    attack(piece, ship);
+  });
+  expect(ship.sunk).toBe(true);
+  expect(ship.health).toBe(0);
 });
