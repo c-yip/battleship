@@ -1,10 +1,7 @@
 import { newShip } from './ship-factory';
-
-test('ship gets hit at 0', () => {
-  newShip.hit(0);
-  expect(newShip.spaces[0]).toBe(true);
-  expect(newShip.spaces[1]).toBe(false);
-});
+import {
+  BoardPiece, testPiece, createGameboard, placeShip, attack, shipArray,
+} from './gameboard-factory';
 
 test('ship sinks', () => {
   newShip.hit(0);
@@ -13,7 +10,18 @@ test('ship sinks', () => {
   expect(newShip.sunk).toBe(true);
 });
 
-test('ship hit location is given after hit', () => {
-  newShip.hit(0);
-  expect(newShip.hitLocation).toBe(0);
+test('board piece properties change when receive hit function called', () => {
+  testPiece.receiveAttack();
+  expect(testPiece.hit).toBe(true);
+  expect(testPiece.miss).toBe(false);
+});
+
+test('attack received by board and ship', () => {
+  const gameboard = createGameboard();
+  placeShip(3, 0, gameboard, 0, 0, 1, true);
+  const boardPiece = gameboard[0][1];
+  const ship = shipArray[0];
+  attack(boardPiece, ship);
+  expect(boardPiece.hit).toBe(true);
+  expect(ship.health).toBe(2);
 });

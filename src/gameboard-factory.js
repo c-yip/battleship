@@ -8,7 +8,7 @@
 
 import { Ship } from './ship-factory';
 
-class BoardPiece {
+export class BoardPiece {
   constructor(x, y) {
     this.hit = false;
     this.miss = false;
@@ -19,11 +19,7 @@ class BoardPiece {
   }
 
   receiveAttack() {
-    // board piece receives attack
-
-    // board piece changes hit or miss boolean
-
-    // adds one to hit count if hit
+    this.hit = true;
   }
 }
 
@@ -31,13 +27,13 @@ function getBoardPiece(gameboard, index, x, y, newShip) {
   const boardPiece = gameboard[index].find((obj) => obj.x === x && obj.y === y);
   boardPiece.occupied = true;
   boardPiece.shipId = newShip.id;
-  console.log('board piece', boardPiece);
 }
-const isHorizontal = true;
+
+export const shipArray = [];
 export function placeShip(length, id, gameboard, index, x, y, isHorizontal) {
   // create ship
   const newShip = new Ship(length, id);
-  console.log('new ship', newShip);
+  shipArray.push(newShip);
   // place ship in boardgame objects, link boardgame objects to the new ship through shipId
   if (isHorizontal) {
     for (let i = 0; i < length; i++) {
@@ -82,3 +78,13 @@ let hitCount;
 function checkIfAllShipsSunk() {
   // checks hit count and if hit count hits limit then game over
 }
+
+export function attack(piece, ship) {
+  piece.receiveAttack();
+  // ship gets hit and loses health
+  ship.hit();
+}
+
+// test board piece
+export const testPiece = new BoardPiece(0, 0);
+testPiece.occupied = true;
