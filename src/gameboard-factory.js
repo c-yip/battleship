@@ -43,9 +43,8 @@ export function placeShip(length, id, gameboard, index, x, y, isHorizontal) {
   }
 }
 
-export function createGameboard() {
+export function createGameboard(board) {
   const arr = [];
-
   // board size
   const a = 7;
   const b = 7;
@@ -65,16 +64,30 @@ export function createGameboard() {
   }
 
   // create 7x7 gameboard in DOM
-  const gameboard = document.querySelector('.gameboard');
-  for (let i = 0; i < a; i++) {
-    for (let j = 0; j < b; j++) {
-      const div = document.createElement('div');
-      div.classList.add('board-piece');
-      div.setAttribute('data-x', i);
-      div.setAttribute('data-y', j);
-      gameboard.appendChild(div);
+  if (board == 'player') {
+    const gameboard = document.querySelector('.gameboard');
+    for (let i = 0; i < a; i++) {
+      for (let j = 0; j < b; j++) {
+        const div = document.createElement('div');
+        div.classList.add('board-piece');
+        div.setAttribute('data-x', i);
+        div.setAttribute('data-y', j);
+        gameboard.appendChild(div);
+      }
+    }
+  } else {
+    const gameboard = document.querySelector('.computer-gameboard');
+    for (let i = 0; i < a; i++) {
+      for (let j = 0; j < b; j++) {
+        const div = document.createElement('div');
+        div.classList.add('board-piece');
+        div.setAttribute('data-x', i);
+        div.setAttribute('data-y', j);
+        gameboard.appendChild(div);
+      }
     }
   }
+
   return arr;
 }
 
