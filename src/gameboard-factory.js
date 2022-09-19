@@ -6,7 +6,7 @@
 // Gameboards should keep track of missed attacks so they can display them properly.
 // Gameboards should be able to report whether or not all of their ships have been sunk.
 
-import { Ship } from './ship-factory';
+import { Ship, hit } from './ship-factory';
 
 export class BoardPiece {
   constructor(x, y) {
@@ -79,10 +79,21 @@ function checkIfAllShipsSunk() {
   // checks hit count and if hit count hits limit then game over
 }
 
-export function attack(piece, ship) {
+export function attack(piece, shipArray) {
+  let ship;
   piece.receiveAttack();
-  // ship gets hit and loses health
-  ship.hit();
+  const { shipId } = piece;
+  console.log('🚀 ~ file: gameboard-factory.js ~ line 86 ~ attack ~ shipId', shipId);
+  // if piece is occupied ship gets hit and loses health
+  if (piece.occupied === true) {
+  // get ship that is on piece
+    ship = shipArray.filter((s) => s.id === shipId);
+    console.log(ship);
+    hit(ship[0]);
+    return ship[0];
+  }
+  piece.miss = true;
+  console.log(ship);
 }
 
 export function getOccupiedPieces(gameboard) {

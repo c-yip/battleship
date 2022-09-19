@@ -20,20 +20,27 @@ test('attack received by board and ship', () => {
   const gameboard = createGameboard();
   placeShip(3, 0, gameboard, 0, 0, 1, true);
   const boardPiece = gameboard[0][1];
-  const ship = shipArray[0];
-  attack(boardPiece, ship);
+  const ship = attack(boardPiece, shipArray);
   expect(boardPiece.hit).toBe(true);
   expect(ship.health).toBe(2);
 });
 
 test('ship sinks after three attacks', () => {
   const gameboard = createGameboard();
-  placeShip(3, 0, gameboard, 0, 0, 1, true);
+  placeShip(3, 1, gameboard, 0, 0, 1, true);
   const occupiedPieces = getOccupiedPieces(gameboard);
-  const ship = shipArray[1];
+  let ship;
   occupiedPieces.forEach((piece) => {
-    attack(piece, ship);
+    ship = attack(piece, shipArray);
   });
   expect(ship.sunk).toBe(true);
   expect(ship.health).toBe(0);
+});
+
+test('piece miss value true after miss', () => {
+  const gameboard = createGameboard();
+  placeShip(3, 2, gameboard, 0, 0, 1, true);
+  const missedPiece = gameboard[1][2];
+  const ship = attack(missedPiece, shipArray);
+  expect(missedPiece.miss).toBe(true);
 });

@@ -20,5 +20,13 @@ export class Ship {
   }
 }
 
+export function hit(ship) {
+  ship.health--;
+  if (ship.health === 0) {
+    ship.sunk = true;
+  }
+  return ship;
+}
+
 // test ship
 export const newShip = new Ship(3);
