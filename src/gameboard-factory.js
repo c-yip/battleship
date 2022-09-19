@@ -85,6 +85,12 @@ export function attack(piece, ship) {
   ship.hit();
 }
 
+export function getOccupiedPieces(gameboard) {
+  const merged = [].concat(...gameboard);
+  const occupiedPieces = merged.filter((pieces) => pieces.occupied === true);
+  return occupiedPieces;
+}
+
 // test board piece
 export const testPiece = new BoardPiece(0, 0);
 testPiece.occupied = true;
