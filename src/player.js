@@ -57,6 +57,36 @@ export default class Player {
         changeColorOfOccupiedPieces(gameboard);
         incrementShipCount();
       });
+
+      // mouseover event to add hover effect
+      piece.addEventListener('mouseover', (event) => {
+        event.target.classList.add('hover');
+        const x = piece.getAttribute('data-x');
+        const y = piece.getAttribute('data-y');
+        for (let i = 1; i < this.playerShips[shipCount].length; i++) {
+          if (position === 'horizontal') {
+            const nextPiece = document.querySelector(`[data-x="${x}"][data-y="${Number(y) + i}"]`);
+            nextPiece.classList.add('hover');
+          } else {
+            const nextPiece = document.querySelector(`[data-x="${Number(x) + i}"][data-y="${y}"]`);
+            nextPiece.classList.add('hover');
+          }
+        }
+      });
+      piece.addEventListener('mouseout', (event) => {
+        event.target.classList.remove('hover');
+        const x = piece.getAttribute('data-x');
+        const y = piece.getAttribute('data-y');
+        for (let i = 1; i < this.playerShips[shipCount].length; i++) {
+          if (position === 'horizontal') {
+            const nextPiece = document.querySelector(`[data-x="${x}"][data-y="${Number(y) + i}"]`);
+            nextPiece.classList.remove('hover');
+          } else {
+            const nextPiece = document.querySelector(`[data-x="${Number(x) + i}"][data-y="${y}"]`);
+            nextPiece.classList.remove('hover');
+          }
+        }
+      });
     });
   }
 }

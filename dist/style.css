@@ -17,6 +17,10 @@
   background-color: white;
 }
 
+.hover {
+  background-color: #e6e6e6;
+}
+
 .occupied {
-  background-color: blue;
+  background-color: black;
 }
