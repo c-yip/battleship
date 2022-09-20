@@ -59,7 +59,9 @@ function placeShip(ship, gameboard, selectedPiece, position) {
   const { id } = ship;
 
   if (position === 'vertical') {
-    if (selectedPiece.x + ship.length > 7 || selectedPiece.occupied === true) {
+    if (selectedPiece.x + ship.length > 7
+      || gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied
+      || selectedPiece.occupied === true) {
       alert('Ship will not fit on board');
       return;
     }
@@ -74,8 +76,7 @@ function placeShip(ship, gameboard, selectedPiece, position) {
 
   if (position === 'horizontal') {
     if (selectedPiece.y + ship.length > 7
-      || gameboard[selectedPiece.x][selectedPiece.y + 1].occupied === true
-      || gameboard[selectedPiece.x][selectedPiece.y + 2].occupied === true
+      || gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied
       || selectedPiece.occupied === true) {
       alert('Ship will not fit on board');
       return;
