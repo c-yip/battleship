@@ -16,29 +16,26 @@ export class BoardPiece {
   }
 }
 
-function getBoardPiece(gameboard, index, x, y, newShip) {
-  const boardPiece = gameboard[index].find((obj) => obj.x === x && obj.y === y);
-  boardPiece.occupied = true;
-  boardPiece.shipId = newShip.id;
-}
+// place Player.ship on gameboard and update gameboard, x is vertical, y is horizontal
+export function placeShip(ship, gameboard, selectedPiece, position) {
+  const { length } = ship;
+  const { id } = ship;
+  selectedPiece.occupied = true;
+  selectedPiece.shipId = id;
 
-export const shipArray = [];
-export function placeShip(length, id, gameboard, index, x, y, isHorizontal) {
-  // create ship
-  const newShip = new Ship(length, id);
-  shipArray.push(newShip);
-  // place ship in boardgame objects, link boardgame objects to the new ship through shipId
-  if (isHorizontal) {
-    for (let i = 0; i < length; i++) {
-      // y increases based on length, placement is right to left
-      getBoardPiece(gameboard, index, x, y, newShip);
-      y++;
+  if (position === 'horizontal') {
+    for (let i = 1; i < length; i += 1) {
+      const nextPiece = gameboard[selectedPiece.x + i][selectedPiece.y];
+      nextPiece.occupied = true;
+      nextPiece.shipId = id;
     }
-  } else {
-    for (let i = 0; i < length; i++) {
-      // x and index increase to go vertical
-      getBoardPiece(gameboard, index++, x, y, newShip);
-      x++;
+  }
+
+  if (position === 'vertical') {
+    for (let i = 1; i < length; i += 1) {
+      const nextPiece = gameboard[selectedPiece.x][selectedPiece.y + i];
+      nextPiece.occupied = true;
+      nextPiece.shipId = id;
     }
   }
 }
@@ -100,7 +97,6 @@ export function attack(piece, shipArray) {
   let ship;
   piece.receiveAttack();
   const { shipId } = piece;
-  console.log('🚀 ~ file: gameboard-factory.js ~ line 86 ~ attack ~ shipId', shipId);
   // if piece is occupied ship gets hit and loses health
   if (piece.occupied === true) {
   // get ship that is on piece
@@ -122,3 +118,27 @@ export function getOccupiedPieces(gameboard) {
 // test board piece
 export const testPiece = new BoardPiece(0, 0);
 testPiece.occupied = true;
+
+// test gameboard
+export const testGameboard = function () {
+  const arr = [];
+  // board size
+  const a = 7;
+  const b = 7;
+
+  // creating two dimensional array
+  for (let i = 0; i < a; i++) {
+    for (let j = 0; j < b; j++) {
+      arr[i] = [];
+    }
+  }
+
+  // inserting elements to array
+  for (let i = 0; i < a; i++) {
+    for (let j = 0; j < b; j++) {
+      arr[i][j] = new BoardPiece(i, j);
+    }
+  }
+
+  return arr;
+};
