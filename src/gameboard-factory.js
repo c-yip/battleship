@@ -93,20 +93,13 @@ function checkIfAllShipsSunk() {
   // checks hit count and if hit count hits limit then game over
 }
 
-export function attack(piece, shipArray) {
-  let ship;
+export function attack(piece, ship) {
   piece.receiveAttack();
-  const { shipId } = piece;
-  // if piece is occupied ship gets hit and loses health
   if (piece.occupied === true) {
-  // get ship that is on piece
-    ship = shipArray.filter((s) => s.id === shipId);
-    console.log(ship);
-    hit(ship[0]);
-    return ship[0];
+    hit(ship);
+    return;
   }
   piece.miss = true;
-  console.log(ship);
 }
 
 export function getOccupiedPieces(gameboard) {

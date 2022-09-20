@@ -29,4 +29,4 @@ export function hit(ship) {
 }
 
 // test ship
-export const newShip = new Ship(3);
+export const newShip = new Ship(3, 0);
