@@ -1,6 +1,7 @@
 import { newShip, Ship } from './ship-factory';
 import {
-  testPiece, placeShip, attack, testGameboard,
+  testPiece, attack, testGameboard,
+  placeShip,
 } from './gameboard-factory';
 
 test('ship sinks', () => {

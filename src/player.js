@@ -1,4 +1,3 @@
-import { placeShip } from './gameboard-factory';
 import { Ship } from './ship-factory';
 
 export default class Player {
@@ -18,7 +17,6 @@ export default class Player {
     this.playerShips.push(carrier, battleship, cruiser, submarine, patrolBoat);
   }
 
-  // player uses placeShip function to place this.playerShips on gameboard on click
   placePlayerShips(gameboard, position) {
     document.querySelectorAll('.board-piece').forEach((piece) => {
       // set position
@@ -30,25 +28,64 @@ export default class Player {
         const y = piece.getAttribute('data-y');
         console.log(`x: ${x}, y: ${y}`);
         const selectedPiece = gameboard[x][y];
-        // place ship on gameboard
+        console.log(selectedPiece);
+
+        // place playerShips on gameboard
         placeShip(this.playerShips[0], gameboard, selectedPiece, position);
-        // placeShip(this.playerShips[1], gameboard, selectedPiece, position);
-        // placeShip(this.playerShips[2], gameboard, selectedPiece, position);
+        changeColorOfOccupiedPieces(gameboard);
 
-        // change color of occupied pieces
-        gameboard.forEach((row) => {
-          row.forEach((piece) => {
-            if (piece.occupied) {
-              const element = document.querySelector(
-                `[data-x="${piece.x}"][data-y="${piece.y}"]`,
-              );
-              element.classList.add('occupied');
-            }
-          });
-        });
-
-        console.log('gameboard after click', gameboard);
+        // remove event listener
+        piece.removeEventListener('click', () => {});
       });
     });
+  }
+}
+
+function changeColorOfOccupiedPieces(gameboard) {
+  gameboard.forEach((row) => {
+    row.forEach((piece) => {
+      if (piece.occupied) {
+        const element = document.querySelector(
+          `[data-x="${piece.x}"][data-y="${piece.y}"]`,
+        );
+        element.classList.add('occupied');
+      }
+    });
+  });
+}
+
+function placeShip(ship, gameboard, selectedPiece, position) {
+  const { length } = ship;
+  const { id } = ship;
+
+  if (position === 'vertical') {
+    if (selectedPiece.x + ship.length > 7 || selectedPiece.occupied === true) {
+      alert('Ship will not fit on board');
+      return;
+    }
+    selectedPiece.occupied = true;
+    selectedPiece.shipId = id;
+    for (let i = 1; i < length; i += 1) {
+      const nextPiece = gameboard[selectedPiece.x + i][selectedPiece.y];
+      nextPiece.occupied = true;
+      nextPiece.shipId = id;
+    }
+  }
+
+  if (position === 'horizontal') {
+    if (selectedPiece.y + ship.length > 7
+      || gameboard[selectedPiece.x][selectedPiece.y + 1].occupied === true
+      || gameboard[selectedPiece.x][selectedPiece.y + 2].occupied === true
+      || selectedPiece.occupied === true) {
+      alert('Ship will not fit on board');
+      return;
+    }
+    selectedPiece.occupied = true;
+    selectedPiece.shipId = id;
+    for (let i = 1; i < length; i += 1) {
+      const nextPiece = gameboard[selectedPiece.x][selectedPiece.y + i];
+      nextPiece.occupied = true;
+      nextPiece.shipId = id;
+    }
   }
 }

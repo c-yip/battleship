@@ -1,4 +1,4 @@
-import { createGameboard, placeShip } from './gameboard-factory';
+import { createGameboard } from './gameboard-factory';
 import Player from './player';
 
 const body = document.querySelector('body');

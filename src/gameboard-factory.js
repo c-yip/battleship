@@ -1,5 +1,4 @@
-import { Ship, hit } from './ship-factory';
-import Player from './player';
+import { hit } from './ship-factory';
 
 export class BoardPiece {
   constructor(x, y) {
@@ -13,30 +12,6 @@ export class BoardPiece {
 
   receiveAttack() {
     this.hit = true;
-  }
-}
-
-// place Player.ship on gameboard and update gameboard, x is vertical, y is horizontal
-export function placeShip(ship, gameboard, selectedPiece, position) {
-  const { length } = ship;
-  const { id } = ship;
-  selectedPiece.occupied = true;
-  selectedPiece.shipId = id;
-
-  if (position === 'vertical') {
-    for (let i = 1; i < length; i += 1) {
-      const nextPiece = gameboard[selectedPiece.x + i][selectedPiece.y];
-      nextPiece.occupied = true;
-      nextPiece.shipId = id;
-    }
-  }
-
-  if (position === 'horizontal') {
-    for (let i = 1; i < length; i += 1) {
-      const nextPiece = gameboard[selectedPiece.x][selectedPiece.y + i];
-      nextPiece.occupied = true;
-      nextPiece.shipId = id;
-    }
   }
 }
 
