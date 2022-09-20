@@ -1,5 +1,21 @@
 import { Ship } from './ship-factory';
 
+let shipPlaced = false;
+let shipCount = 0;
+
+// increment ship count
+function incrementShipCount() {
+  if (shipCount >= 5) {
+    // start game
+    return;
+  }
+
+  if (shipPlaced) {
+    shipCount++;
+    return shipCount;
+  }
+}
+
 export default class Player {
   constructor(name) {
     this.name = name;
@@ -31,11 +47,9 @@ export default class Player {
         console.log(selectedPiece);
 
         // place playerShips on gameboard
-        placeShip(this.playerShips[0], gameboard, selectedPiece, position);
+        placeShip(this.playerShips[shipCount], gameboard, selectedPiece, position);
         changeColorOfOccupiedPieces(gameboard);
-
-        // remove event listener
-        piece.removeEventListener('click', () => {});
+        incrementShipCount();
       });
     });
   }
@@ -62,6 +76,7 @@ function placeShip(ship, gameboard, selectedPiece, position) {
     if (selectedPiece.x + ship.length > 7
       || gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied
       || selectedPiece.occupied === true) {
+      shipPlaced = false;
       alert('Ship will not fit on board');
       return;
     }
@@ -72,12 +87,14 @@ function placeShip(ship, gameboard, selectedPiece, position) {
       nextPiece.occupied = true;
       nextPiece.shipId = id;
     }
+    shipPlaced = true;
   }
 
   if (position === 'horizontal') {
     if (selectedPiece.y + ship.length > 7
       || gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied
       || selectedPiece.occupied === true) {
+      shipPlaced = false;
       alert('Ship will not fit on board');
       return;
     }
@@ -88,5 +105,6 @@ function placeShip(ship, gameboard, selectedPiece, position) {
       nextPiece.occupied = true;
       nextPiece.shipId = id;
     }
+    shipPlaced = true;
   }
 }

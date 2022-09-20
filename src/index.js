@@ -7,7 +7,7 @@ let player;
 let playerGameboard;
 let computerGameboard;
 const name = 'Test Player';
-const position = 'horizontal';
+const position = 'vertical';
 function startGame(name) {
   // create player gameboard
   playerGameboard = createGameboard('player');
