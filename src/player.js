@@ -33,11 +33,17 @@ export default class Player {
     this.playerShips.push(carrier, battleship, cruiser, submarine, patrolBoat);
   }
 
-  placePlayerShips(gameboard, position) {
-    document.querySelectorAll('.board-piece').forEach((piece) => {
-      // set position
-      // event listener that toggles position
+  placePlayerShips(gameboard) {
+    let position = 'vertical';
+    document.querySelector('.toggle-button').addEventListener('click', () => {
+      if (position === 'vertical') {
+        position = 'horizontal';
+      } else {
+        position = 'vertical';
+      }
+    });
 
+    document.querySelectorAll('.board-piece').forEach((piece) => {
       piece.addEventListener('click', () => {
         // get x and y coordinates of element to get selectedPiece from gameboard
         const x = piece.getAttribute('data-x');
