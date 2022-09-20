@@ -1,6 +1,6 @@
 import { newShip, Ship } from './ship-factory';
 import {
-  testPiece, createGameboard, placeShip, attack, shipArray, getOccupiedPieces, testGameboard,
+  testPiece, placeShip, attack, testGameboard,
 } from './gameboard-factory';
 
 test('ship sinks', () => {
