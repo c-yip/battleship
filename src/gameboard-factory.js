@@ -23,7 +23,7 @@ export function placeShip(ship, gameboard, selectedPiece, position) {
   selectedPiece.occupied = true;
   selectedPiece.shipId = id;
 
-  if (position === 'horizontal') {
+  if (position === 'vertical') {
     for (let i = 1; i < length; i += 1) {
       const nextPiece = gameboard[selectedPiece.x + i][selectedPiece.y];
       nextPiece.occupied = true;
@@ -31,7 +31,7 @@ export function placeShip(ship, gameboard, selectedPiece, position) {
     }
   }
 
-  if (position === 'vertical') {
+  if (position === 'horizontal') {
     for (let i = 1; i < length; i += 1) {
       const nextPiece = gameboard[selectedPiece.x][selectedPiece.y + i];
       nextPiece.occupied = true;
