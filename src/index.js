@@ -36,5 +36,4 @@ function startGame(name) {
 body.onload = startGame(name);
 
 console.log(player);
-console.log('player', playerGameboard);
-console.log(computerGameboard);
+console.log('computer', computerGameboard);

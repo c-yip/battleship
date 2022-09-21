@@ -117,9 +117,7 @@ function randomlyPlaceShip(ship, gameboard) {
   // const horizontalAvailablePieces = gameboard.filter((pieces) => pieces.filter((piece) => piece.y <= 7 - ship.length));
   const mergedGameboard = [].concat.apply([], gameboard);
   const horizontalAvailablePieces = mergedGameboard.filter((pieces) => pieces.y <= 7 - ship.length);
-  console.log('🚀 ~ file: gameboard-factory.js ~ line 118 ~ randomlyPlaceShip ~ horizontalAvailablePieces', horizontalAvailablePieces);
   const verticalAvailablePieces = mergedGameboard.filter((pieces) => pieces.x <= 7 - ship.length);
-  console.log('🚀 ~ file: gameboard-factory.js ~ line 120 ~ randomlyPlaceShip ~ verticalAvailablePieces', verticalAvailablePieces);
 
   // randomize position
   const position = Math.random() < 0.5 ? 'horizontal' : 'vertical';
@@ -128,7 +126,6 @@ function randomlyPlaceShip(ship, gameboard) {
   const selectedPiece = position === 'horizontal' ? horizontalAvailablePieces[Math.floor(Math.random() * horizontalAvailablePieces.length)] : verticalAvailablePieces[Math.floor(Math.random() * verticalAvailablePieces.length)];
   selectedPiece.occupied = true;
   selectedPiece.shipId = ship.id;
-  console.log('selected piece', selectedPiece);
 
   if (position === 'vertical') {
     // conditions for computer vertical placement
@@ -160,5 +157,4 @@ export function computerShipPlacement(gameboard) {
   for (let i = 0; i < shipArray.length; i++) {
     randomlyPlaceShip(shipArray[i], gameboard);
   }
-  console.log('computer gameboard after ships placed', gameboard);
 }
