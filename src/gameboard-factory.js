@@ -1,4 +1,5 @@
-import { hit } from './ship-factory';
+import { hit, Ship } from './ship-factory';
+import { placeShip } from './player';
 
 export class BoardPiece {
   constructor(x, y) {
@@ -110,3 +111,54 @@ export const testGameboard = function () {
 
   return arr;
 };
+
+function randomlyPlaceShip(ship, gameboard) {
+  // array of pieces that computer can select from
+  // const horizontalAvailablePieces = gameboard.filter((pieces) => pieces.filter((piece) => piece.y <= 7 - ship.length));
+  const mergedGameboard = [].concat.apply([], gameboard);
+  const horizontalAvailablePieces = mergedGameboard.filter((pieces) => pieces.y <= 7 - ship.length);
+  console.log('🚀 ~ file: gameboard-factory.js ~ line 118 ~ randomlyPlaceShip ~ horizontalAvailablePieces', horizontalAvailablePieces);
+  const verticalAvailablePieces = mergedGameboard.filter((pieces) => pieces.x <= 7 - ship.length);
+  console.log('🚀 ~ file: gameboard-factory.js ~ line 120 ~ randomlyPlaceShip ~ verticalAvailablePieces', verticalAvailablePieces);
+
+  // randomize position
+  const position = Math.random() < 0.5 ? 'horizontal' : 'vertical';
+
+  // randomly select piece from available pieces based on position
+  const selectedPiece = position === 'horizontal' ? horizontalAvailablePieces[Math.floor(Math.random() * horizontalAvailablePieces.length)] : verticalAvailablePieces[Math.floor(Math.random() * verticalAvailablePieces.length)];
+  selectedPiece.occupied = true;
+  selectedPiece.shipId = ship.id;
+  console.log('selected piece', selectedPiece);
+
+  if (position === 'vertical') {
+    // conditions for computer vertical placement
+    for (let i = 0; i < ship.length; i++) {
+      gameboard[selectedPiece.x + i][selectedPiece.y].occupied = true;
+      gameboard[selectedPiece.x + i][selectedPiece.y].shipId = ship.id;
+    }
+  }
+
+  if (position === 'horizontal') {
+    // conditions for computer horizontal placement
+    for (let i = 0; i < ship.length; i++) {
+      gameboard[selectedPiece.x][selectedPiece.y + i].occupied = true;
+      gameboard[selectedPiece.x][selectedPiece.y + i].shipId = ship.id;
+    }
+  }
+}
+
+// computer places its ships on gameboard randomly
+export function computerShipPlacement(gameboard) {
+  const carrier = new Ship(5, 1);
+  const battleship = new Ship(4, 2);
+  const cruiser = new Ship(3, 3);
+  const submarine = new Ship(3, 4);
+  const patrolBoat = new Ship(2, 5);
+
+  const shipArray = [carrier, battleship, cruiser, submarine, patrolBoat];
+
+  for (let i = 0; i < shipArray.length; i++) {
+    randomlyPlaceShip(shipArray[i], gameboard);
+  }
+  console.log('computer gameboard after ships placed', gameboard);
+}

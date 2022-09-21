@@ -104,7 +104,7 @@ function changeColorOfOccupiedPieces(gameboard) {
   });
 }
 
-function placeShip(ship, gameboard, selectedPiece, position) {
+export function placeShip(ship, gameboard, selectedPiece, position) {
   const { length } = ship;
   const { id } = ship;
 
