@@ -2,14 +2,10 @@ import { Ship } from './ship-factory';
 
 let shipPlaced = false;
 let shipCount = 0;
+const controller = new AbortController();
 
 // increment ship count
 function incrementShipCount() {
-  if (shipCount >= 5) {
-    // start game
-    return;
-  }
-
   if (shipPlaced) {
     shipCount++;
     return shipCount;
@@ -56,7 +52,15 @@ export default class Player {
         placeShip(this.playerShips[shipCount], gameboard, selectedPiece, position);
         changeColorOfOccupiedPieces(gameboard);
         incrementShipCount();
-      });
+        console.log('ship count: ', shipCount);
+
+        // check if all ships are placed and remove all event listeners
+        if (shipCount === 5) {
+          console.log('test if triggered');
+          // remove event listeners
+          controller.abort();
+        }
+      }, { signal: controller.signal });
 
       // mouseover event to add hover effect
       piece.addEventListener('mouseover', (event) => {
@@ -72,7 +76,7 @@ export default class Player {
             nextPiece.classList.add('hover');
           }
         }
-      });
+      }, { signal: controller.signal });
       piece.addEventListener('mouseout', (event) => {
         event.target.classList.remove('hover');
         const x = piece.getAttribute('data-x');
@@ -86,7 +90,7 @@ export default class Player {
             nextPiece.classList.remove('hover');
           }
         }
-      });
+      }, { signal: controller.signal });
     });
   }
 }
