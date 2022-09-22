@@ -59,6 +59,12 @@ export default class Player {
           console.log('test if triggered');
           // remove event listeners
           controller.abort();
+
+          // remove toggle button
+          document.querySelector('.toggle-button').remove();
+
+          // make start game button display
+          document.querySelector('.start-game-button').style.display = 'block';
         }
       }, { signal: controller.signal });
 
