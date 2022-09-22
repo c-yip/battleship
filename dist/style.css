@@ -27,5 +27,13 @@
 }
 
 .start-game-button {
-  display: none;
+  visibility: hidden;
+}
+
+.hit {
+  background-color: red;
+}
+
+.miss {
+  background-color: blue;
 }

@@ -259,4 +259,6 @@ export function computerShipPlacement(gameboard) {
   if (getOccupiedPieces(gameboard).length !== 17) {
     alert('Computer ships not placed correctly');
   }
+
+  return shipArray;
 }

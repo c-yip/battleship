@@ -64,7 +64,8 @@ export default class Player {
           document.querySelector('.toggle-button').remove();
 
           // make start game button display
-          document.querySelector('.start-game-button').style.display = 'block';
+          const startGameBtn = document.querySelector('.start-game-button');
+          startGameBtn.style.visibility = 'visible';
         }
       }, { signal: controller.signal });
 
@@ -98,6 +99,8 @@ export default class Player {
         }
       }, { signal: controller.signal });
     });
+
+    return this.playerShips;
   }
 }
 
