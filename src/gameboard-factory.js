@@ -114,21 +114,39 @@ export const testGameboard = function () {
 
 function randomlyPlaceShip(ship, gameboard) {
   // array of pieces that computer can select from
-  // const horizontalAvailablePieces = gameboard.filter((pieces) => pieces.filter((piece) => piece.y <= 7 - ship.length));
   const mergedGameboard = [].concat.apply([], gameboard);
-  const horizontalAvailablePieces = mergedGameboard.filter((pieces) => pieces.y <= 7 - ship.length);
-  const verticalAvailablePieces = mergedGameboard.filter((pieces) => pieces.x <= 7 - ship.length);
 
   // randomize position
   const position = Math.random() < 0.5 ? 'horizontal' : 'vertical';
 
   // randomly select piece from available pieces based on position
-  const selectedPiece = position === 'horizontal' ? horizontalAvailablePieces[Math.floor(Math.random() * horizontalAvailablePieces.length)] : verticalAvailablePieces[Math.floor(Math.random() * verticalAvailablePieces.length)];
+  function selectPiece(position, ship) {
+    if (position === 'horizontal') {
+      const randomIndex = Math.floor(Math.random() * mergedGameboard.length);
+      const selectedPiece = mergedGameboard[randomIndex];
+      if (selectedPiece.occupied === true
+        || selectedPiece.y + ship.length > 7
+        || gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied
+      ) { return selectPiece(position, ship); }
+      return selectedPiece;
+    }
+
+    if (position === 'vertical') {
+      const randomIndex = Math.floor(Math.random() * mergedGameboard.length);
+      const selectedPiece = mergedGameboard[randomIndex];
+      if (selectedPiece.occupied === true
+        || selectedPiece.x + ship.length > 7
+        || gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied
+      ) { return selectPiece(position, ship); }
+      return selectedPiece;
+    }
+  }
+  const selectedPiece = selectPiece(position, ship);
   selectedPiece.occupied = true;
   selectedPiece.shipId = ship.id;
 
   if (position === 'vertical') {
-    // conditions for computer vertical placement
+    // computer vertical placement
     for (let i = 0; i < ship.length; i++) {
       gameboard[selectedPiece.x + i][selectedPiece.y].occupied = true;
       gameboard[selectedPiece.x + i][selectedPiece.y].shipId = ship.id;
@@ -136,7 +154,7 @@ function randomlyPlaceShip(ship, gameboard) {
   }
 
   if (position === 'horizontal') {
-    // conditions for computer horizontal placement
+    // computer horizontal placement
     for (let i = 0; i < ship.length; i++) {
       gameboard[selectedPiece.x][selectedPiece.y + i].occupied = true;
       gameboard[selectedPiece.x][selectedPiece.y + i].shipId = ship.id;
@@ -156,5 +174,9 @@ export function computerShipPlacement(gameboard) {
 
   for (let i = 0; i < shipArray.length; i++) {
     randomlyPlaceShip(shipArray[i], gameboard);
+  }
+
+  if (getOccupiedPieces(gameboard).length !== 17) {
+    alert('Computer ships not placed correctly');
   }
 }
