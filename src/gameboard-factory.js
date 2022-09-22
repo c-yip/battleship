@@ -126,8 +126,49 @@ function randomlyPlaceShip(ship, gameboard) {
       const selectedPiece = mergedGameboard[randomIndex];
       if (selectedPiece.occupied === true
         || selectedPiece.y + ship.length > 7
-        || gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied
+
       ) { return selectPiece(position, ship); }
+
+      // ships cannot overlap
+
+      if (ship.length === 2) {
+        if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied) {
+          return selectPiece(position, ship);
+        }
+      }
+      if (ship.length === 3) {
+        if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied) {
+          return selectPiece(position, ship);
+        }
+        if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 2].occupied) {
+          return selectPiece(position, ship);
+        }
+      }
+      if (ship.length === 4) {
+        if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied) {
+          return selectPiece(position, ship);
+        }
+        if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 2].occupied) {
+          return selectPiece(position, ship);
+        }
+        if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 3].occupied) {
+          return selectPiece(position, ship);
+        }
+      }
+      if (ship.length === 5) {
+        if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied) {
+          return selectPiece(position, ship);
+        }
+        if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 2].occupied) {
+          return selectPiece(position, ship);
+        }
+        if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 3].occupied) {
+          return selectPiece(position, ship);
+        }
+        if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 4].occupied) {
+          return selectPiece(position, ship);
+        }
+      }
       return selectedPiece;
     }
 
@@ -136,8 +177,48 @@ function randomlyPlaceShip(ship, gameboard) {
       const selectedPiece = mergedGameboard[randomIndex];
       if (selectedPiece.occupied === true
         || selectedPiece.x + ship.length > 7
-        || gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied
       ) { return selectPiece(position, ship); }
+
+      // ships cannot overlap
+      if (ship.length === 2) {
+        if (gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied) {
+          return selectPiece(position, ship);
+        }
+      }
+      if (ship.length === 3) {
+        if (gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied) {
+          return selectPiece(position, ship);
+        }
+        if (gameboard[selectedPiece.x + ship.length - 2][selectedPiece.y].occupied) {
+          return selectPiece(position, ship);
+        }
+      }
+      if (ship.length === 4) {
+        if (gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied) {
+          return selectPiece(position, ship);
+        }
+        if (gameboard[selectedPiece.x + ship.length - 2][selectedPiece.y].occupied) {
+          return selectPiece(position, ship);
+        }
+        if (gameboard[selectedPiece.x + ship.length - 3][selectedPiece.y].occupied) {
+          return selectPiece(position, ship);
+        }
+      }
+      if (ship.length === 5) {
+        if (gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied) {
+          return selectPiece(position, ship);
+        }
+        if (gameboard[selectedPiece.x + ship.length - 2][selectedPiece.y].occupied) {
+          return selectPiece(position, ship);
+        }
+        if (gameboard[selectedPiece.x + ship.length - 3][selectedPiece.y].occupied) {
+          return selectPiece(position, ship);
+        }
+        if (gameboard[selectedPiece.x + ship.length - 4][selectedPiece.y].occupied) {
+          return selectPiece(position, ship);
+        }
+      }
+
       return selectedPiece;
     }
   }
