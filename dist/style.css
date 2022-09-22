@@ -1,5 +1,6 @@
 .gameboards {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }
 .gameboard, .computer-gameboard {
   display: grid;
@@ -36,4 +37,14 @@
 
 .miss {
   background-color: blue;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.buttons {
+  padding: 10px;
 }

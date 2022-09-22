@@ -24,26 +24,28 @@ function startGame(name) {
   computerShips = computerShipPlacement(computerGameboard);
 
   // temporary color for computer occupied pieces
-  computerGameboard.forEach((row) => {
-    row.forEach((piece) => {
-      if (piece.occupied) {
-        const element = compGB.querySelector(
-          `[data-x="${piece.x}"][data-y="${piece.y}"]`,
-        );
-        element.classList.add('occupied');
-      }
-    });
-  });
+  // computerGameboard.forEach((row) => {
+  //   row.forEach((piece) => {
+  //     if (piece.occupied) {
+  //       const element = compGB.querySelector(
+  //         `[data-x="${piece.x}"][data-y="${piece.y}"]`,
+  //       );
+  //       element.classList.add('occupied');
+  //     }
+  //   });
+  // });
 }
 
 startButton.addEventListener('click', startGameLoop);
 
 function startGameLoop() {
-  console.log('game loop started');
-  console.log('computer gameboard', computerGameboard);
-  console.log('player gameboard', playerGameboard);
-  console.log('computer ships', computerShips);
-  console.log('player ships', playerShips);
+  // console.log('game loop started');
+  // console.log('computer gameboard', computerGameboard);
+  // console.log('player gameboard', playerGameboard);
+  // console.log('computer ships', computerShips);
+  // console.log('player ships', playerShips);
+
+  startButton.style.visibility = 'hidden';
 
   // allow player to attack computer gameboard and computer to attack player gameboard
   computerGameboard.forEach((row) => {
