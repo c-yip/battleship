@@ -74,8 +74,8 @@ function startGameLoop() {
         // computer chooses random piece
 
         function getRandomPiece() {
-          const randomX = Math.floor(Math.random() * 6);
-          const randomY = Math.floor(Math.random() * 6);
+          const randomX = Math.floor(Math.random() * 7);
+          const randomY = Math.floor(Math.random() * 7);
           const pickedPiece = playerGameboard[randomX][randomY];
           if (pickedPiece.hit || pickedPiece.miss) {
             return getRandomPiece();
