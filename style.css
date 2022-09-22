@@ -25,3 +25,7 @@
   background-color: black;
   border: solid 1px white;
 }
+
+.start-game-button {
+  display: none;
+}
