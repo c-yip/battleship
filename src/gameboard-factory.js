@@ -69,10 +69,16 @@ function checkIfAllShipsSunk() {
   // checks hit count and if hit count hits limit then game over
 }
 
-export function attack(piece, ship) {
-  piece.receiveAttack();
+export function attack(piece, shipArray) {
   if (piece.occupied === true) {
-    hit(ship);
+    piece.receiveAttack();
+    // get ship through piece shipId
+    const shipsFiltered = shipArray.filter((s) => s.id === piece.shipId);
+    const ship = shipsFiltered[0];
+    console.log('type of ship', typeof ship);
+    console.log('ship', ship);
+
+    ship.hit();
     return;
   }
   piece.miss = true;
