@@ -9,11 +9,20 @@
 </head>
 <body>
   <div class="gameboards">
-    <div class="gameboard"></div>
-    <div class="computer-gameboard"></div>
+    <div class="container">
+      <h1>Player Gameboard</h1>
+      <div class="gameboard"></div>
+      <div class="container buttons">
+        <button type="button" class="toggle-button">Toggle Position</button>
+        <button type="button" class="start-game-button">Start Game</button>
+      </div>
+    </div>
+    <div class="container">
+      <h1>Computer Gameboard</h1>
+      <div class="computer-gameboard"></div>
+    </div>
   </div>
-  <button type="button" class="toggle-button">Toggle Position</button>
-  <button type="button" class="start-game-button">Start Game</button>
+  
   <script src="main.js"></script>
 </body>
 </html>
