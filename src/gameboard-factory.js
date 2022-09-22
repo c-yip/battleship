@@ -130,7 +130,6 @@ function randomlyPlaceShip(ship, gameboard) {
       ) { return selectPiece(position, ship); }
 
       // ships cannot overlap
-
       if (ship.length === 2) {
         if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied) {
           return selectPiece(position, ship);
