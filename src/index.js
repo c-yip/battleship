@@ -70,11 +70,19 @@ function startGameLoop() {
 
         // after click, computer attacks player gameboard
         // computer chooses random piece
-        const randomX = Math.floor(Math.random() * 7);
-        const randomY = Math.floor(Math.random() * 7);
-        const randomPiece = playerGameboard[randomX][randomY];
+
+        function getRandomPiece() {
+          const randomX = Math.floor(Math.random() * 6);
+          const randomY = Math.floor(Math.random() * 6);
+          const pickedPiece = playerGameboard[randomX][randomY];
+          if (pickedPiece.hit || pickedPiece.miss) {
+            return getRandomPiece();
+          }
+          return pickedPiece;
+        }
+
+        const randomPiece = getRandomPiece();
         console.log('random piece', randomPiece);
-        console.log('random piece.occupied', randomPiece.occupied);
         // get player gameboard piece elements
         const playerGB = document.querySelector('.gameboard');
         const playerPiece = playerGB.querySelector(
@@ -106,7 +114,7 @@ function startGameLoop() {
         if (playerShipsSunk.length === 5) {
           alert('You lose!');
         }
-      });
+      }, { once: true });
     });
   });
 }
