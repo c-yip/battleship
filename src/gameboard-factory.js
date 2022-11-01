@@ -64,19 +64,12 @@ export function createGameboard(board) {
   return arr;
 }
 
-let hitCount;
-function checkIfAllShipsSunk() {
-  // checks hit count and if hit count hits limit then game over
-}
-
 export function attack(piece, shipArray) {
   if (piece.occupied === true) {
     piece.receiveAttack();
     // get ship through piece shipId
     const shipsFiltered = shipArray.filter((s) => s.id === piece.shipId);
     const ship = shipsFiltered[0];
-    console.log("type of ship", typeof ship);
-    console.log("ship", ship);
 
     ship.hit();
     return;

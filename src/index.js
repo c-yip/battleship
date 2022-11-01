@@ -15,6 +15,10 @@ let computerGameboard;
 let playerShips = [];
 let computerShips = [];
 const name = "Test Player";
+let playerScore = 0;
+let computerScore = 0;
+let gameEnd = false;
+const controller = new AbortController();
 
 function startGame(name) {
   // create player gameboard
@@ -26,6 +30,23 @@ function startGame(name) {
   computerGameboard = createGameboard("computer");
   // function that has computer place ships randomly
   computerShips = computerShipPlacement(computerGameboard);
+}
+
+// end game message and restart button
+function endGame(playerWin) {
+  gameEnd = true;
+  document.querySelector(".score-board").style.visibility = "hidden";
+  const endGameModal = document.querySelector(".end-game-modal");
+  const modalTitle = document.querySelector(".modal-title");
+  endGameModal.style.display = "block";
+  playerWin
+    ? (modalTitle.textContent = "You Win!")
+    : (modalTitle.textContent = "You Lose!");
+
+  const restartButton = document.querySelector(".restart-game-button");
+  restartButton.addEventListener("click", () => {
+    location.reload();
+  });
 }
 
 startButton.addEventListener("click", startGameLoop);
@@ -42,19 +63,14 @@ function startGameLoop() {
       element.addEventListener(
         "click",
         (event) => {
-          console.log("clicked");
-          console.log("piece", piece);
-          console.log("piece.occupied", piece.occupied);
-
           // attack computer gameboard
           attack(piece, computerShips);
 
           // change color of piece
           if (piece.occupied) {
-            console.log("hit");
             element.classList.add("hit");
+            playerScore++;
           } else {
-            console.log("miss");
             element.classList.add("miss");
           }
 
@@ -72,7 +88,6 @@ function startGameLoop() {
           }
 
           const randomPiece = getRandomPiece();
-          console.log("random piece", randomPiece);
           // get player gameboard piece elements
           const playerGB = document.querySelector(".gameboard");
           const playerPiece = playerGB.querySelector(
@@ -84,33 +99,36 @@ function startGameLoop() {
 
           // change color of piece
           if (randomPiece.occupied) {
-            console.log("hit");
             playerPiece.classList.add("hit");
+            computerScore++;
           } else {
-            console.log("miss");
             playerPiece.classList.add("miss");
           }
+
+          document.querySelector(
+            ".player-score"
+          ).textContent = `Player Score: ${playerScore}`;
+          document.querySelector(
+            ".computer-score"
+          ).textContent = `Computer Score: ${computerScore}`;
 
           // check if game is over
           // check if computer ships are all sunk
           const computerShipsSunk = computerShips.filter(
             (s) => s.sunk === true
           );
-          console.log(computerShips);
-          console.log(
-            "number of computer ships sunk",
-            computerShipsSunk.length
-          );
+
           if (computerShipsSunk.length === 5) {
-            alert("You win!");
+            endGame(true);
           }
           // check if player ships are all sunk
           const playerShipsSunk = playerShips.filter((s) => s.sunk === true);
           if (playerShipsSunk.length === 5) {
-            alert("You lose!");
+            endGame(false);
           }
+          if (gameEnd) controller.abort();
         },
-        { once: true }
+        { once: true, signal: controller.signal }
       );
     });
   });

@@ -46,9 +46,7 @@ export default class Player {
           // get x and y coordinates of element to get selectedPiece from gameboard
           const x = piece.getAttribute("data-x");
           const y = piece.getAttribute("data-y");
-          console.log(`x: ${x}, y: ${y}`);
           const selectedPiece = gameboard[x][y];
-          console.log(selectedPiece);
 
           // place playerShips on gameboard
           placeShip(
@@ -59,11 +57,9 @@ export default class Player {
           );
           changeColorOfOccupiedPieces(gameboard);
           incrementShipCount();
-          console.log("ship count: ", shipCount);
 
           // check if all ships are placed and remove all event listeners
           if (shipCount === 5) {
-            console.log("test if triggered");
             // remove event listeners
             controller.abort();
 
