@@ -13,18 +13,27 @@
       crossorigin="anonymous"
     />
   </head>
-  <body>
-    <div class="gameboards">
-      <div class="container">
-        <h1>Player Gameboard</h1>
+  <body class="">
+    <h1
+      class="row d-flex justify-content-center align-items-center display-1 fw-bold"
+    >
+      BATTLESHIP
+    </h1>
+    <div class="gameboards row">
+      <div class="container col p-5">
+        <h2>Player Gameboard</h2>
         <div class="gameboard"></div>
         <div class="container buttons">
-          <button type="button" class="toggle-button">Toggle Position</button>
-          <button type="button" class="start-game-button">Start Game</button>
+          <button type="button" class="toggle-button btn btn-warning">
+            Toggle Position
+          </button>
+          <button type="button" class="start-game-button btn btn-warning">
+            Start Game
+          </button>
         </div>
       </div>
-      <div class="container">
-        <h1>Computer Gameboard</h1>
+      <div class="container col p-5">
+        <h2>Computer Gameboard</h2>
         <div class="computer-gameboard"></div>
       </div>
     </div>
