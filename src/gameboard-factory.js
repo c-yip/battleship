@@ -1,5 +1,5 @@
-import { hit, Ship } from './ship-factory';
-import { placeShip } from './player';
+import { hit, Ship } from "./ship-factory";
+import { placeShip } from "./player";
 
 export class BoardPiece {
   constructor(x, y) {
@@ -37,25 +37,25 @@ export function createGameboard(board) {
   }
 
   // create 7x7 gameboard in DOM
-  if (board == 'player') {
-    const gameboard = document.querySelector('.gameboard');
+  if (board == "player") {
+    const gameboard = document.querySelector(".gameboard");
     for (let i = 0; i < a; i++) {
       for (let j = 0; j < b; j++) {
-        const div = document.createElement('div');
-        div.classList.add('board-piece');
-        div.setAttribute('data-x', i);
-        div.setAttribute('data-y', j);
+        const div = document.createElement("div");
+        div.classList.add("board-piece");
+        div.setAttribute("data-x", i);
+        div.setAttribute("data-y", j);
         gameboard.appendChild(div);
       }
     }
   } else {
-    const gameboard = document.querySelector('.computer-gameboard');
+    const gameboard = document.querySelector(".computer-gameboard");
     for (let i = 0; i < a; i++) {
       for (let j = 0; j < b; j++) {
-        const div = document.createElement('div');
-        div.classList.add('board-piece');
-        div.setAttribute('data-x', i);
-        div.setAttribute('data-y', j);
+        const div = document.createElement("div");
+        div.classList.add("board-piece");
+        div.setAttribute("data-x", i);
+        div.setAttribute("data-y", j);
         gameboard.appendChild(div);
       }
     }
@@ -75,8 +75,8 @@ export function attack(piece, shipArray) {
     // get ship through piece shipId
     const shipsFiltered = shipArray.filter((s) => s.id === piece.shipId);
     const ship = shipsFiltered[0];
-    console.log('type of ship', typeof ship);
-    console.log('ship', ship);
+    console.log("type of ship", typeof ship);
+    console.log("ship", ship);
 
     ship.hit();
     return;
@@ -123,103 +123,148 @@ function randomlyPlaceShip(ship, gameboard) {
   const mergedGameboard = [].concat.apply([], gameboard);
 
   // randomize position
-  const position = Math.random() < 0.5 ? 'horizontal' : 'vertical';
+  const position = Math.random() < 0.5 ? "horizontal" : "vertical";
 
   // randomly select piece from available pieces based on position
   function selectPiece(position, ship) {
-    if (position === 'horizontal') {
+    if (position === "horizontal") {
       const randomIndex = Math.floor(Math.random() * mergedGameboard.length);
       const selectedPiece = mergedGameboard[randomIndex];
-      if (selectedPiece.occupied === true
-        || selectedPiece.y + ship.length > 7
-
-      ) { return selectPiece(position, ship); }
+      if (
+        selectedPiece.occupied === true ||
+        selectedPiece.y + ship.length > 7
+      ) {
+        return selectPiece(position, ship);
+      }
 
       // ships cannot overlap
       if (ship.length === 2) {
-        if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied) {
+        if (
+          gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied
+        ) {
           return selectPiece(position, ship);
         }
       }
       if (ship.length === 3) {
-        if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied) {
+        if (
+          gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied
+        ) {
           return selectPiece(position, ship);
         }
-        if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 2].occupied) {
+        if (
+          gameboard[selectedPiece.x][selectedPiece.y + ship.length - 2].occupied
+        ) {
           return selectPiece(position, ship);
         }
       }
       if (ship.length === 4) {
-        if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied) {
+        if (
+          gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied
+        ) {
           return selectPiece(position, ship);
         }
-        if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 2].occupied) {
+        if (
+          gameboard[selectedPiece.x][selectedPiece.y + ship.length - 2].occupied
+        ) {
           return selectPiece(position, ship);
         }
-        if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 3].occupied) {
+        if (
+          gameboard[selectedPiece.x][selectedPiece.y + ship.length - 3].occupied
+        ) {
           return selectPiece(position, ship);
         }
       }
       if (ship.length === 5) {
-        if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied) {
+        if (
+          gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied
+        ) {
           return selectPiece(position, ship);
         }
-        if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 2].occupied) {
+        if (
+          gameboard[selectedPiece.x][selectedPiece.y + ship.length - 2].occupied
+        ) {
           return selectPiece(position, ship);
         }
-        if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 3].occupied) {
+        if (
+          gameboard[selectedPiece.x][selectedPiece.y + ship.length - 3].occupied
+        ) {
           return selectPiece(position, ship);
         }
-        if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 4].occupied) {
+        if (
+          gameboard[selectedPiece.x][selectedPiece.y + ship.length - 4].occupied
+        ) {
           return selectPiece(position, ship);
         }
       }
       return selectedPiece;
     }
 
-    if (position === 'vertical') {
+    if (position === "vertical") {
       const randomIndex = Math.floor(Math.random() * mergedGameboard.length);
       const selectedPiece = mergedGameboard[randomIndex];
-      if (selectedPiece.occupied === true
-        || selectedPiece.x + ship.length > 7
-      ) { return selectPiece(position, ship); }
+      if (
+        selectedPiece.occupied === true ||
+        selectedPiece.x + ship.length > 7
+      ) {
+        return selectPiece(position, ship);
+      }
 
       // ships cannot overlap
       if (ship.length === 2) {
-        if (gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied) {
+        if (
+          gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied
+        ) {
           return selectPiece(position, ship);
         }
       }
       if (ship.length === 3) {
-        if (gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied) {
+        if (
+          gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied
+        ) {
           return selectPiece(position, ship);
         }
-        if (gameboard[selectedPiece.x + ship.length - 2][selectedPiece.y].occupied) {
+        if (
+          gameboard[selectedPiece.x + ship.length - 2][selectedPiece.y].occupied
+        ) {
           return selectPiece(position, ship);
         }
       }
       if (ship.length === 4) {
-        if (gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied) {
+        if (
+          gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied
+        ) {
           return selectPiece(position, ship);
         }
-        if (gameboard[selectedPiece.x + ship.length - 2][selectedPiece.y].occupied) {
+        if (
+          gameboard[selectedPiece.x + ship.length - 2][selectedPiece.y].occupied
+        ) {
           return selectPiece(position, ship);
         }
-        if (gameboard[selectedPiece.x + ship.length - 3][selectedPiece.y].occupied) {
+        if (
+          gameboard[selectedPiece.x + ship.length - 3][selectedPiece.y].occupied
+        ) {
           return selectPiece(position, ship);
         }
       }
       if (ship.length === 5) {
-        if (gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied) {
+        if (
+          gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied
+        ) {
           return selectPiece(position, ship);
         }
-        if (gameboard[selectedPiece.x + ship.length - 2][selectedPiece.y].occupied) {
+        if (
+          gameboard[selectedPiece.x + ship.length - 2][selectedPiece.y].occupied
+        ) {
           return selectPiece(position, ship);
         }
-        if (gameboard[selectedPiece.x + ship.length - 3][selectedPiece.y].occupied) {
+        if (
+          gameboard[selectedPiece.x + ship.length - 3][selectedPiece.y].occupied
+        ) {
           return selectPiece(position, ship);
         }
-        if (gameboard[selectedPiece.x + ship.length - 4][selectedPiece.y].occupied) {
+        if (
+          gameboard[selectedPiece.x + ship.length - 4][selectedPiece.y].occupied
+        ) {
           return selectPiece(position, ship);
         }
       }
@@ -231,7 +276,7 @@ function randomlyPlaceShip(ship, gameboard) {
   selectedPiece.occupied = true;
   selectedPiece.shipId = ship.id;
 
-  if (position === 'vertical') {
+  if (position === "vertical") {
     // computer vertical placement
     for (let i = 0; i < ship.length; i++) {
       gameboard[selectedPiece.x + i][selectedPiece.y].occupied = true;
@@ -239,7 +284,7 @@ function randomlyPlaceShip(ship, gameboard) {
     }
   }
 
-  if (position === 'horizontal') {
+  if (position === "horizontal") {
     // computer horizontal placement
     for (let i = 0; i < ship.length; i++) {
       gameboard[selectedPiece.x][selectedPiece.y + i].occupied = true;
@@ -263,7 +308,7 @@ export function computerShipPlacement(gameboard) {
   }
 
   if (getOccupiedPieces(gameboard).length !== 17) {
-    alert('Computer ships not placed correctly');
+    alert("Computer ships not placed correctly");
   }
 
   return shipArray;

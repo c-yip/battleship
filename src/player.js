@@ -1,4 +1,4 @@
-import { Ship } from './ship-factory';
+import { Ship } from "./ship-factory";
 
 let shipPlaced = false;
 let shipCount = 0;
@@ -30,74 +30,99 @@ export default class Player {
   }
 
   placePlayerShips(gameboard) {
-    let position = 'vertical';
-    document.querySelector('.toggle-button').addEventListener('click', () => {
-      if (position === 'vertical') {
-        position = 'horizontal';
+    let position = "vertical";
+    document.querySelector(".toggle-button").addEventListener("click", () => {
+      if (position === "vertical") {
+        position = "horizontal";
       } else {
-        position = 'vertical';
+        position = "vertical";
       }
     });
 
-    document.querySelectorAll('.board-piece').forEach((piece) => {
-      piece.addEventListener('click', () => {
-        // get x and y coordinates of element to get selectedPiece from gameboard
-        const x = piece.getAttribute('data-x');
-        const y = piece.getAttribute('data-y');
-        console.log(`x: ${x}, y: ${y}`);
-        const selectedPiece = gameboard[x][y];
-        console.log(selectedPiece);
+    document.querySelectorAll(".board-piece").forEach((piece) => {
+      piece.addEventListener(
+        "click",
+        () => {
+          // get x and y coordinates of element to get selectedPiece from gameboard
+          const x = piece.getAttribute("data-x");
+          const y = piece.getAttribute("data-y");
+          console.log(`x: ${x}, y: ${y}`);
+          const selectedPiece = gameboard[x][y];
+          console.log(selectedPiece);
 
-        // place playerShips on gameboard
-        placeShip(this.playerShips[shipCount], gameboard, selectedPiece, position);
-        changeColorOfOccupiedPieces(gameboard);
-        incrementShipCount();
-        console.log('ship count: ', shipCount);
+          // place playerShips on gameboard
+          placeShip(
+            this.playerShips[shipCount],
+            gameboard,
+            selectedPiece,
+            position
+          );
+          changeColorOfOccupiedPieces(gameboard);
+          incrementShipCount();
+          console.log("ship count: ", shipCount);
 
-        // check if all ships are placed and remove all event listeners
-        if (shipCount === 5) {
-          console.log('test if triggered');
-          // remove event listeners
-          controller.abort();
+          // check if all ships are placed and remove all event listeners
+          if (shipCount === 5) {
+            console.log("test if triggered");
+            // remove event listeners
+            controller.abort();
 
-          // remove toggle button
-          document.querySelector('.toggle-button').remove();
+            // remove toggle button
+            document.querySelector(".toggle-button").remove();
 
-          // make start game button display
-          const startGameBtn = document.querySelector('.start-game-button');
-          startGameBtn.style.visibility = 'visible';
-        }
-      }, { signal: controller.signal });
+            // make start game button display
+            const startGameBtn = document.querySelector(".start-game-button");
+            startGameBtn.style.visibility = "visible";
+          }
+        },
+        { signal: controller.signal }
+      );
 
       // mouseover event to add hover effect
-      piece.addEventListener('mouseover', (event) => {
-        event.target.classList.add('hover');
-        const x = piece.getAttribute('data-x');
-        const y = piece.getAttribute('data-y');
-        for (let i = 1; i < this.playerShips[shipCount].length; i++) {
-          if (position === 'horizontal') {
-            const nextPiece = document.querySelector(`[data-x="${x}"][data-y="${Number(y) + i}"]`);
-            nextPiece.classList.add('hover');
-          } else {
-            const nextPiece = document.querySelector(`[data-x="${Number(x) + i}"][data-y="${y}"]`);
-            nextPiece.classList.add('hover');
+      piece.addEventListener(
+        "mouseover",
+        (event) => {
+          event.target.classList.add("hover");
+          const x = piece.getAttribute("data-x");
+          const y = piece.getAttribute("data-y");
+          for (let i = 1; i < this.playerShips[shipCount].length; i++) {
+            if (position === "horizontal") {
+              const nextPiece = document.querySelector(
+                `[data-x="${x}"][data-y="${Number(y) + i}"]`
+              );
+              nextPiece.classList.add("hover");
+            } else {
+              const nextPiece = document.querySelector(
+                `[data-x="${Number(x) + i}"][data-y="${y}"]`
+              );
+              nextPiece.classList.add("hover");
+            }
           }
-        }
-      }, { signal: controller.signal });
-      piece.addEventListener('mouseout', (event) => {
-        event.target.classList.remove('hover');
-        const x = piece.getAttribute('data-x');
-        const y = piece.getAttribute('data-y');
-        for (let i = 1; i < this.playerShips[shipCount].length; i++) {
-          if (position === 'horizontal') {
-            const nextPiece = document.querySelector(`[data-x="${x}"][data-y="${Number(y) + i}"]`);
-            nextPiece.classList.remove('hover');
-          } else {
-            const nextPiece = document.querySelector(`[data-x="${Number(x) + i}"][data-y="${y}"]`);
-            nextPiece.classList.remove('hover');
+        },
+        { signal: controller.signal }
+      );
+      piece.addEventListener(
+        "mouseout",
+        (event) => {
+          event.target.classList.remove("hover");
+          const x = piece.getAttribute("data-x");
+          const y = piece.getAttribute("data-y");
+          for (let i = 1; i < this.playerShips[shipCount].length; i++) {
+            if (position === "horizontal") {
+              const nextPiece = document.querySelector(
+                `[data-x="${x}"][data-y="${Number(y) + i}"]`
+              );
+              nextPiece.classList.remove("hover");
+            } else {
+              const nextPiece = document.querySelector(
+                `[data-x="${Number(x) + i}"][data-y="${y}"]`
+              );
+              nextPiece.classList.remove("hover");
+            }
           }
-        }
-      }, { signal: controller.signal });
+        },
+        { signal: controller.signal }
+      );
     });
 
     return this.playerShips;
@@ -109,9 +134,9 @@ function changeColorOfOccupiedPieces(gameboard) {
     row.forEach((piece) => {
       if (piece.occupied) {
         const element = document.querySelector(
-          `[data-x="${piece.x}"][data-y="${piece.y}"]`,
+          `[data-x="${piece.x}"][data-y="${piece.y}"]`
         );
-        element.classList.add('occupied');
+        element.classList.add("occupied");
       }
     });
   });
@@ -121,70 +146,89 @@ export function placeShip(ship, gameboard, selectedPiece, position) {
   const { length } = ship;
   const { id } = ship;
 
-  if (position === 'vertical') {
-    if (selectedPiece.x + ship.length > 7
-      || selectedPiece.occupied === true) {
+  if (position === "vertical") {
+    if (selectedPiece.x + ship.length > 7 || selectedPiece.occupied === true) {
       shipPlaced = false;
-      alert('Ship will not fit on board');
+      alert("Ship will not fit on board");
       return;
     }
 
     // ships cannot overlap
     if (ship.length === 2) {
-      if (gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied) {
+      if (
+        gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied
+      ) {
         shipPlaced = false;
-        alert('Ships cannot overlap.');
+        alert("Ships cannot overlap.");
         return;
       }
     }
     if (ship.length === 3) {
-      if (gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied) {
+      if (
+        gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied
+      ) {
         shipPlaced = false;
-        alert('Ships cannot overlap.');
+        alert("Ships cannot overlap.");
         return;
       }
-      if (gameboard[selectedPiece.x + ship.length - 2][selectedPiece.y].occupied) {
+      if (
+        gameboard[selectedPiece.x + ship.length - 2][selectedPiece.y].occupied
+      ) {
         shipPlaced = false;
-        alert('Ships cannot overlap.');
+        alert("Ships cannot overlap.");
         return;
       }
     }
     if (ship.length === 4) {
-      if (gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied) {
+      if (
+        gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied
+      ) {
         shipPlaced = false;
-        alert('Ships cannot overlap.');
+        alert("Ships cannot overlap.");
         return;
       }
-      if (gameboard[selectedPiece.x + ship.length - 2][selectedPiece.y].occupied) {
+      if (
+        gameboard[selectedPiece.x + ship.length - 2][selectedPiece.y].occupied
+      ) {
         shipPlaced = false;
-        alert('Ships cannot overlap.');
+        alert("Ships cannot overlap.");
         return;
       }
-      if (gameboard[selectedPiece.x + ship.length - 3][selectedPiece.y].occupied) {
+      if (
+        gameboard[selectedPiece.x + ship.length - 3][selectedPiece.y].occupied
+      ) {
         shipPlaced = false;
-        alert('Ships cannot overlap.');
+        alert("Ships cannot overlap.");
         return;
       }
     }
     if (ship.length === 5) {
-      if (gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied) {
+      if (
+        gameboard[selectedPiece.x + ship.length - 1][selectedPiece.y].occupied
+      ) {
         shipPlaced = false;
-        alert('Ships cannot overlap.');
+        alert("Ships cannot overlap.");
         return;
       }
-      if (gameboard[selectedPiece.x + ship.length - 2][selectedPiece.y].occupied) {
+      if (
+        gameboard[selectedPiece.x + ship.length - 2][selectedPiece.y].occupied
+      ) {
         shipPlaced = false;
-        alert('Ships cannot overlap.');
+        alert("Ships cannot overlap.");
         return;
       }
-      if (gameboard[selectedPiece.x + ship.length - 3][selectedPiece.y].occupied) {
+      if (
+        gameboard[selectedPiece.x + ship.length - 3][selectedPiece.y].occupied
+      ) {
         shipPlaced = false;
-        alert('Ships cannot overlap.');
+        alert("Ships cannot overlap.");
         return;
       }
-      if (gameboard[selectedPiece.x + ship.length - 4][selectedPiece.y].occupied) {
+      if (
+        gameboard[selectedPiece.x + ship.length - 4][selectedPiece.y].occupied
+      ) {
         shipPlaced = false;
-        alert('Ships cannot overlap.');
+        alert("Ships cannot overlap.");
         return;
       }
     }
@@ -199,70 +243,89 @@ export function placeShip(ship, gameboard, selectedPiece, position) {
     shipPlaced = true;
   }
 
-  if (position === 'horizontal') {
-    if (selectedPiece.y + ship.length > 7
-      || selectedPiece.occupied === true) {
+  if (position === "horizontal") {
+    if (selectedPiece.y + ship.length > 7 || selectedPiece.occupied === true) {
       shipPlaced = false;
-      alert('Ship will not fit on board');
+      alert("Ship will not fit on board");
       return;
     }
 
     // ships cannot overlap
     if (ship.length === 2) {
-      if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied) {
+      if (
+        gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied
+      ) {
         shipPlaced = false;
-        alert('Ships cannot overlap.');
+        alert("Ships cannot overlap.");
         return;
       }
     }
     if (ship.length === 3) {
-      if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied) {
+      if (
+        gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied
+      ) {
         shipPlaced = false;
-        alert('Ships cannot overlap.');
+        alert("Ships cannot overlap.");
         return;
       }
-      if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 2].occupied) {
+      if (
+        gameboard[selectedPiece.x][selectedPiece.y + ship.length - 2].occupied
+      ) {
         shipPlaced = false;
-        alert('Ships cannot overlap.');
+        alert("Ships cannot overlap.");
         return;
       }
     }
     if (ship.length === 4) {
-      if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied) {
+      if (
+        gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied
+      ) {
         shipPlaced = false;
-        alert('Ships cannot overlap.');
+        alert("Ships cannot overlap.");
         return;
       }
-      if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 2].occupied) {
+      if (
+        gameboard[selectedPiece.x][selectedPiece.y + ship.length - 2].occupied
+      ) {
         shipPlaced = false;
-        alert('Ships cannot overlap.');
+        alert("Ships cannot overlap.");
         return;
       }
-      if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 3].occupied) {
+      if (
+        gameboard[selectedPiece.x][selectedPiece.y + ship.length - 3].occupied
+      ) {
         shipPlaced = false;
-        alert('Ships cannot overlap.');
+        alert("Ships cannot overlap.");
         return;
       }
     }
     if (ship.length === 5) {
-      if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied) {
+      if (
+        gameboard[selectedPiece.x][selectedPiece.y + ship.length - 1].occupied
+      ) {
         shipPlaced = false;
-        alert('Ships cannot overlap.');
+        alert("Ships cannot overlap.");
         return;
       }
-      if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 2].occupied) {
+      if (
+        gameboard[selectedPiece.x][selectedPiece.y + ship.length - 2].occupied
+      ) {
         shipPlaced = false;
-        alert('Ships cannot overlap.');
+        alert("Ships cannot overlap.");
         return;
       }
-      if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 3].occupied) {
+      if (
+        gameboard[selectedPiece.x][selectedPiece.y + ship.length - 3].occupied
+      ) {
         shipPlaced = false;
-        alert('Ships cannot overlap.');
+        alert("Ships cannot overlap.");
         return;
       }
-      if (gameboard[selectedPiece.x][selectedPiece.y + ship.length - 4].occupied) {
+      if (
+        gameboard[selectedPiece.x][selectedPiece.y + ship.length - 4].occupied
+      ) {
         shipPlaced = false;
-        alert('Ships cannot overlap.');
+        alert("Ships cannot overlap.");
         return;
       }
     }
