@@ -64,3 +64,14 @@ button:hover {
 .buttons {
   padding: 10px;
 }
+
+.end-game-modal {
+  display: none;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  background-color: #ff731d;
+  max-width: 80%;
+}
