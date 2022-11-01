@@ -2,7 +2,8 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
-.gameboard, .computer-gameboard {
+.gameboard,
+.computer-gameboard {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(7, 1fr);
